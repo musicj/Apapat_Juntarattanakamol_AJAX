@@ -4,6 +4,7 @@
   const hotspots = document.querySelectorAll(".Hotspot");
   const materialTemplate = document.querySelector('#material-template');
   const materialList = document.querySelector('#material-list');
+  const wrapperCon = document.querySelector('#wrapper');
 
   //Info Boxes API https://swiftpixel.com/earbud/api/infoboxes"
   //Material List API https://swiftpixel.com/earbud/api/materials"
@@ -12,6 +13,7 @@
   function loadInfoBoxes() {
 
     //Add loading indicator
+    // loader.classList.toggle('hidden');
 
     //make AJAX call here
     fetch("https://swiftpixel.com/earbud/api/infoboxes")
@@ -38,6 +40,8 @@
         selected.appendChild(textElement);
       });
 
+      // loader.classList.toggle('hidden');
+
     })
     .catch();
     //Add erorr message
@@ -49,8 +53,9 @@
   function loadMaterialInfo() {
 
     //Add loading indicator
+    loader.classList.toggle('hidden');
 
-    fetch("https://swiftpixel.com/earbud/api/materials")
+    fetch("https://swiftpixel.com/earbud/api/mateials")
     .then(response => response.json())
     .then(materialListData => {
 
@@ -67,9 +72,17 @@
         materialList.appendChild(clone);
       });
 
+      loader.classList.toggle('hidden');
+
     })
-    .catch()
-    //Add error message
+    .catch(error => {
+      console.log(error);
+      const errorMessage = document.createElement('p');
+      errorMessage.textContent = 'Oh! Something went wrong. Please check your internet connection or give it another try later.';
+      wrapperCon.appendChild(errorMessage);
+      // loader.classList.toggle('hidden');
+  })
+    
 
   }
 
